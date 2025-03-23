@@ -148,7 +148,7 @@ class NaiveBayes:
                 var = self.pixel_variances[digit_class, pixel_idx]
                 
                 # Log of Gaussian PDF: -0.5 * log(2π * var) - 0.5 * (x - mean)^2 / var
-                log_likelihood = -0.5 * np.log(2 * np.pi * var) - 0.5 * ((pixel_value - mean) ** 2) / var
+                log_likelihood = -0.5 * np.log(2 * np.pi * var) - 0.5 * ((pixel_value - mean) ** 2) / (2 * var) 
                 log_posteriors[digit_class] += log_likelihood
         
         return log_posteriors
