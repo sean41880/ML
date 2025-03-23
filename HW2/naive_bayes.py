@@ -147,8 +147,8 @@ class NaiveBayes:
                 mean = self.pixel_means[digit_class, pixel_idx]
                 var = self.pixel_variances[digit_class, pixel_idx]
                 
-                # Log of Gaussian PDF: -0.5 * log(2π * var) - 0.5 * (x - mean)^2 / var
-                log_likelihood = -0.5 * np.log(2 * np.pi * var) - 0.5 * ((pixel_value - mean) ** 2) / (2 * var) 
+                # Log of Gaussian PDF: -0.5 * log(2π * var) - 0.5 * (x - mean)^2 / 2 * var
+                log_likelihood = -0.5 * np.log(2 * np.pi * var) - 0.5 * ((pixel_value - mean) ** 2) / (2 * var) + 1e-10
                 log_posteriors[digit_class] += log_likelihood
         
         return log_posteriors
@@ -216,11 +216,11 @@ def main():
     for i in range(num_test):
         predicted_class, log_posteriors = classifier.predict(test_images[i])
         true_class = test_labels[i]
-        
+
+        log_posteriors /= np.sum(log_posteriors)
+
         # Print posteriors for each test image
         print(f"Test image {i+1}:")
-        log_posteriors /= np.sum(log_posteriors)
-        
         for j in range(10):
             print(f"Posterior for digit {j}: {log_posteriors[j]:.17f}")
         
