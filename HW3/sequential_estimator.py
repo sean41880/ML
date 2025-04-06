@@ -51,11 +51,6 @@ def main():
         prev_mean_estimate = float('inf')
         prev_variance_estimate = float('inf')
         
-        print("\nSequential Estimation Process:")
-        print("-------------------------------")
-        print("Iteration | Data Point | Mean Estimate | Variance Estimate")
-        print("-------------------------------")
-        
         # Continue until both estimates converge
         while (abs(mean_estimate - prev_mean_estimate) > mean_threshold or
                abs(variance_estimate - prev_variance_estimate) > variance_threshold or
